@@ -1,0 +1,26 @@
+.search-container {
+	display: flex;
+	background-color: rgba(255, 255, 255, 0.2);
+	border-radius: 8px;
+	padding: 4px 10px;
+	height: 36px;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #cfcfcf;
+}
+
+.search-container input {
+	color: white;
+	border: none;
+	background-color: rgba(255, 255, 255, 0);
+	border-radius: 8px;
+	margin-left: 8px;
+}
+
+.search-container input:focus {
+	outline: none;
+}
+
+.search-container img {
+	cursor: pointer;
+}

@@ -1,0 +1,52 @@
+.repoimage {
+	display: flex;
+	padding: 16px;
+	border-radius: 6px;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+	margin-bottom: 16px;
+	flex-direction: column;
+	background-color: white;
+}
+
+.repoimage:hover {
+	box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
+}
+
+.repoimage .tag {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: min-content;
+	padding: 4px;
+	background-color: #ff92a2;
+	color: white;
+	font-weight: 500;
+	font-size: 14px;
+	border-radius: 4px;
+	margin-top: 4px;
+}
+
+.repoimage .creator {
+	display: flex;
+	align-items: center;
+	margin-top: 12px;
+	font-weight: 600;
+	font-size: "14px";
+}
+
+.copy-code {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	font-weight: 500;
+	border-radius: 8px;
+	background-color: rgb(230, 230, 230);
+	padding: 12px;
+	font-family: monospace;
+	cursor: pointer;
+}
+
+.copy-code:hover .copy-icon {
+	color: #ff92a2;
+}

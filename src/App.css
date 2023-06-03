@@ -1,0 +1,54 @@
+.App {
+	text-align: center;
+	background-color: #050505;
+	color: white;
+	/* color: #256afe; */
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.app-body {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.app-body-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 1240px;
+	z-index: 2;
+}
+
+.explore-button {
+	padding: 5px 10px;
+	background-color: #256afe;
+	width: fit-content;
+	margin-top: 24px;
+	border-radius: 6px;
+	font-weight: 600;
+	font-size: 22px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.homepage-shadow-overlay {
+	position: absolute;
+	height: 50vh;
+	width: 100%;
+	bottom: 0;
+	z-index: 1;
+
+	background: linear-gradient(
+		rgba(5, 5, 5, 1) 0%,
+		rgba(37, 106, 254, 0.1) 20%,
+		rgba(37, 106, 254, 0.3) 40%,
+		rgba(37, 106, 254, 0.6) 70%,
+		rgba(37, 106, 254, 0.8) 90%,
+		rgba(37, 106, 254, 1) 100%
+	);
+}
