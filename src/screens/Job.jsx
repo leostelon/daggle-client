@@ -2,11 +2,11 @@ import { Box } from "@mui/material";
 import React from "react";
 import { LeftDrawer } from "../components/LeftDrawer";
 
-export const Home = () => {
+export const Job = () => {
 	return (
 		<Box sx={{ display: "flex" }}>
 			<LeftDrawer />
-			<Box>Home</Box>
+			<Box sx={{ color: "pink" }}>Job</Box>
 		</Box>
 	);
 };
