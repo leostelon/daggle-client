@@ -1,16 +1,15 @@
 .search-container {
 	display: flex;
-	background-color: rgba(255, 255, 255, 0.2);
+	background-color: #e8e8e89f;
 	border-radius: 8px;
 	padding: 4px 10px;
 	height: 36px;
 	justify-content: center;
 	align-items: center;
-	border: 1px solid #cfcfcf;
+	color: #828488;
 }
 
 .search-container input {
-	color: white;
 	border: none;
 	background-color: rgba(255, 255, 255, 0);
 	border-radius: 8px;

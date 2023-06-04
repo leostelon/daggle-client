@@ -25,7 +25,7 @@ export function SearchComponent() {
 			<div className="search-container">
 				<TbSearch
 					onClick={onSearch}
-					color="grey"
+					color="#828488"
 					cursor={"pointer"}
 					size={18}
 				/>

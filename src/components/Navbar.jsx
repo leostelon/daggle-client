@@ -1,19 +1,20 @@
 import "../styles/navbar.css";
 import React, { useEffect, useState } from "react";
 import { Box, Menu, MenuItem } from "@mui/material";
-import { BsPerson } from "react-icons/bs";
 import { connectWalletToSite, getWalletAddress } from "../utils/wallet";
 import { createUser } from "../api/user";
-import { HiOutlineLogout } from "react-icons/hi";
-import { MdOutlinePersonOutline } from "react-icons/md";
+import { HiOutlineBell, HiOutlineLogout } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { SearchComponent } from "./search/SearchComponent";
-import Logo from "../assets/logo.png";
+import { MdOutlinePersonOutline } from "react-icons/md";
+import NoProfilePicture from "../assets/default-profile-icon.png";
+import { getShortAddress } from "../utils/addressShort";
 
 export const Navbar = ({ disableSearch = false }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 	const navigate = useNavigate();
+	const [username, setUsername] = useState("");
 	const [connectedToSite, setConnectedToSite] = useState(false);
 
 	const handleClick = (event) => {
@@ -29,6 +30,7 @@ export const Navbar = ({ disableSearch = false }) => {
 		if (address && address !== "") {
 			let token = localStorage.getItem("token");
 			localStorage.setItem("address", address);
+			setUsername(address);
 			if (!token || token === "" || token === "undefined") {
 				await createUser(address);
 			}
@@ -41,7 +43,6 @@ export const Navbar = ({ disableSearch = false }) => {
 
 	useEffect(() => {
 		connectSite();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -52,23 +53,9 @@ export const Navbar = ({ disableSearch = false }) => {
 				display: "flex",
 				alignItems: "center",
 				flexDirection: "column",
+				borderBottom: "1px solid #f5f5f5",
 			}}
 		>
-			<Box
-				sx={{
-					p: 1,
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-					backgroundColor: "#256afe",
-					color: "white",
-					width: "100%",
-					fontWeight: "700",
-					cursor: "pointer",
-				}}
-			>
-				✨ Onsite compute for stable diffusion has been enabled ✨
-			</Box>
 			<div className="navbar">
 				<div
 					onClick={() => {
@@ -76,17 +63,11 @@ export const Navbar = ({ disableSearch = false }) => {
 					}}
 					style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
 				>
-					<img height={"45px"} src={Logo} alt="logo" />
-
-					<h1
-						style={{
-							alignItems: "flex-start",
-							display: "flex",
-							fontFamily: "'Pacifico', cursive",
-						}}
-					>
-						&nbsp;Daggle🚀
-					</h1>
+					{!disableSearch && (
+						<Box mr={2}>
+							<SearchComponent />
+						</Box>
+					)}
 				</div>
 				<div
 					style={{
@@ -95,32 +76,40 @@ export const Navbar = ({ disableSearch = false }) => {
 						justifyContent: "center",
 					}}
 				>
-					<Box className="navlist">
-						<p onClick={() => navigate("/explore")}>Explore</p>
-						<p
-							onClick={() =>
-								window.open(
-									"https://github.com/leostelon/kissingface",
-									"_blank"
-								)
-							}
+					<Box mr={3} sx={{ display: "flex", position: "relative" }}>
+						<HiOutlineBell size={24} color="#828488" />
+						<Box
+							sx={{
+								position: "absolute",
+								color: "red",
+								size: "50px",
+								top: "-8px",
+								right: 0,
+							}}
 						>
-							Github
-						</p>
-					</Box>
-					{!disableSearch && (
-						<Box mr={2}>
-							<SearchComponent />
+							●
 						</Box>
-					)}
+					</Box>
 					{!connectedToSite ? (
 						<Box onClick={connectSite} className="upload-button">
 							Connect Wallet
 						</Box>
 					) : (
 						<Box>
-							<Box className="profile-icon" onClick={handleClick}>
-								<BsPerson size={30} />{" "}
+							<Box display="flex" alignItems={"center"}>
+								<Box
+									sx={{
+										backgroundImage: `url("${NoProfilePicture}")`,
+										backgroundPosition: "center",
+										backgroundRepeat: "no-repeat",
+										backgroundSize: "cover",
+									}}
+									className="profile-icon"
+									onClick={handleClick}
+								></Box>
+								<Box sx={{ fontWeight: "bold", ml: "6px" }}>
+									{getShortAddress(username)}
+								</Box>
 							</Box>
 							<Menu
 								sx={{ top: "4px" }}
@@ -147,15 +136,14 @@ export const Navbar = ({ disableSearch = false }) => {
 										setAnchorEl(null);
 									}}
 								>
+									<MdOutlinePersonOutline color="#828488" size={20} />
 									<p
 										style={{
-											marginRight: "4px",
 											fontSize: "14px",
 										}}
 									>
-										Profile
+										Change Profile
 									</p>
-									<MdOutlinePersonOutline size={20} />
 								</MenuItem>
 								<MenuItem
 									onClick={() => {
@@ -164,15 +152,15 @@ export const Navbar = ({ disableSearch = false }) => {
 										setAnchorEl(null);
 									}}
 								>
+									<HiOutlineLogout color="#828488" size={20} />
+									&nbsp;
 									<p
 										style={{
-											marginRight: "4px",
 											fontSize: "14px",
 										}}
 									>
 										Logout
 									</p>
-									<HiOutlineLogout size={20} />
 								</MenuItem>
 							</Menu>
 						</Box>
