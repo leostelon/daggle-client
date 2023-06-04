@@ -153,7 +153,7 @@ export function LeftDrawer({ smaller }) {
 								onClick={() => navigate(path)}
 								sx={{
 									backgroundColor: index === ind ? "#4954FD" : "",
-									borderRadius: "12px",
+									borderRadius: "8px",
 									p: 1,
 									py: 1.5,
 									mb: 1,
