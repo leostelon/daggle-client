@@ -1,3 +1,4 @@
+import "../styles/Home.css";
 import { Box } from "@mui/material";
 import React from "react";
 import { LeftDrawer } from "../components/LeftDrawer";
@@ -6,6 +7,7 @@ import TensorflowImg from "../assets/tensorflow.png";
 import StableDiffusion from "../assets/stablediffusion.png";
 import FileUpload from "../assets/fileupload.png";
 import Dataset from "../assets/dataset.png";
+import { JobComponent } from "../components/JobComponent";
 
 const actions = [
 	{ title: "Upload File", image: FileUpload },
@@ -76,7 +78,21 @@ export const Home = () => {
 						</Box>
 						<br />
 						<h4 style={{ color: "#525252" }}>Recent Jobs ❇️</h4>
-						<Box>{}</Box>
+						<br />
+						<Box>
+							<table>
+								<tr>
+									<th>Id</th>
+									<th>Type</th>
+									<th>Status</th>
+									<th>Result</th>
+									<th>Created</th>
+								</tr>
+								{Array.from({ length: 6 }).map((i) => (
+									<JobComponent />
+								))}
+							</table>
+						</Box>
 					</Box>
 					<Box flex={1} p={1} borderLeft="1px solid #ededed">
 						<h4 style={{ color: "#525252" }}>Overview</h4>

@@ -1,0 +1,26 @@
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+	color: #828488;
+	font-size: 12px;
+}
+
+th {
+	font-weight: 500;
+	color: #828488;
+	border-bottom: 1px solid #dddddd73;
+	text-align: left;
+	padding: 8px;
+	padding-bottom: 12px;
+}
+
+td {
+	border-bottom: 1px solid #dddddd73;
+	text-align: left;
+	padding: 24px 8px;
+}
+
+td:nth-child(1) {
+	font-weight: 600;
+}
