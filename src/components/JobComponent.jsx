@@ -3,7 +3,7 @@ import { MdContentCopy } from "react-icons/md";
 import { PrimaryGrey } from "../constants";
 import { Box, Tooltip } from "@mui/material";
 
-export const JobComponent = () => {
+export const JobComponent = ({ job }) => {
 	const [copyEnabled, setCopyEnabled] = useState(false);
 	const [open, setOpen] = useState(false);
 
@@ -12,8 +12,12 @@ export const JobComponent = () => {
 	}
 	return (
 		<tr>
-			<td style={{ fontWeight: "500", color: "#303031", display: "flex" }}  onMouseEnter={toggleCopy} onMouseLeave={toggleCopy}>
-				Alfreds Futterkiste
+			<td
+				style={{ fontWeight: "500", color: "#303031", display: "flex" }}
+				onMouseEnter={toggleCopy}
+				onMouseLeave={toggleCopy}
+			>
+				{job.id}
 				<Tooltip
 					title="Copied!"
 					placement="top"
@@ -22,7 +26,7 @@ export const JobComponent = () => {
 				>
 					<Box
 						onClick={() => {
-							navigator.clipboard.writeText("videoId");
+							navigator.clipboard.writeText(job.id);
 							setOpen(true);
 						}}
 					>
@@ -38,10 +42,11 @@ export const JobComponent = () => {
 					</Box>
 				</Tooltip>
 			</td>
-			<td>Maria Anders</td>
-			<td>Germany</td>
-			<td>Germany</td>
-			<td>09/04/2023 20:29</td>
+			<td>{job.type}</td>
+			<td>{job.status}</td>
+			<td>result</td>
+			{/* <td>09/04/2023 20:29</td> */}
+			<td>{new Date(job.timestamp).toDateString()}</td>
 		</tr>
 	);
 };

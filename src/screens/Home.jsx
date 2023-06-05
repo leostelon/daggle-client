@@ -8,14 +8,20 @@ import StableDiffusion from "../assets/stablediffusion.png";
 import FileUpload from "../assets/fileupload.png";
 import Dataset from "../assets/dataset.png";
 import { JobComponent } from "../components/JobComponent";
+import { useNavigate } from "react-router-dom";
 
 const actions = [
-	{ title: "Upload File", image: FileUpload },
-	{ title: "Upload Dataset", image: Dataset },
-	{ title: "Train Model", image: TensorflowImg },
-	{ title: "Stable Diffusion", image: StableDiffusion },
+	{ title: "Upload File", image: FileUpload, path: "/fileupload" },
+	{ title: "Upload Dataset", image: Dataset, path: "/uploaddataset" },
+	{ title: "Train Model", image: TensorflowImg, path: "/train" },
+	{
+		title: "Stable Diffusion",
+		image: StableDiffusion,
+		path: "/stablediffusion",
+	},
 ];
 export const Home = () => {
+	const navigate = useNavigate();
 	return (
 		<Box sx={{ display: "flex" }}>
 			<LeftDrawer />
@@ -49,6 +55,7 @@ export const Home = () => {
 											border: `3px solid #4954FD`,
 										},
 									}}
+									onClick={() => navigate(i.path)}
 								>
 									<Box
 										sx={{
