@@ -47,6 +47,38 @@ export const createJob = async function (datasetId, prompt) {
 	}
 };
 
+export const fileUpload = async function (url) {
+	try {
+		let token = localStorage.getItem("token");
+
+		const resolved = await resolve(
+			axios.post(
+				SERVER_URL + "/bacalhau/fileupload",
+				{ url },
+				{
+					headers: {
+						"Content-Type": `application/json`,
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
+		);
+		if (resolved.statusCode === 404) {
+			const data = resolved.data;
+			if (data.data.message && data.data.message.includes("authenticate")) {
+				toast("Please connect your wallet!", {
+					type: "info",
+				});
+			}
+		} else if (resolved.statusCode === 200) {
+			toast("Successfully started upload to IPFS, check status in jobs sections.", { type: "success" });
+		}
+		return resolved;
+	} catch (error) {
+		console.log(error.message);
+	}
+};
+
 export const getJobs = async function () {
 	try {
 		let token = localStorage.getItem("token");
