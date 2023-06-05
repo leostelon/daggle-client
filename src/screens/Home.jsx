@@ -1,6 +1,6 @@
 import "../styles/Home.css";
-import { Box } from "@mui/material";
-import React from "react";
+import { Box, Skeleton } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { LeftDrawer } from "../components/LeftDrawer";
 import { Navbar } from "../components/Navbar";
 import TensorflowImg from "../assets/tensorflow.png";
@@ -8,20 +8,29 @@ import StableDiffusion from "../assets/stablediffusion.png";
 import FileUpload from "../assets/fileupload.png";
 import Dataset from "../assets/dataset.png";
 import { JobComponent } from "../components/JobComponent";
-import { useNavigate } from "react-router-dom";
+import { getJobs } from "../api/bacalhau";
 
 const actions = [
-	{ title: "Upload File", image: FileUpload, path: "/fileupload" },
-	{ title: "Upload Dataset", image: Dataset, path: "/uploaddataset" },
-	{ title: "Train Model", image: TensorflowImg, path: "/train" },
-	{
-		title: "Stable Diffusion",
-		image: StableDiffusion,
-		path: "/stablediffusion",
-	},
+	{ title: "Upload File", image: FileUpload },
+	{ title: "Upload Dataset", image: Dataset },
+	{ title: "Train Model", image: TensorflowImg },
+	{ title: "Stable Diffusion", image: StableDiffusion },
 ];
 export const Home = () => {
-	const navigate = useNavigate();
+	const [jobs, setJobs] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	async function gJ() {
+		setLoading(true);
+		const resolved = await getJobs();
+		setJobs(resolved.data);
+		setLoading(false);
+	}
+
+	useEffect(() => {
+		gJ();
+	}, []);
+
 	return (
 		<Box sx={{ display: "flex" }}>
 			<LeftDrawer />
@@ -55,7 +64,6 @@ export const Home = () => {
 											border: `3px solid #4954FD`,
 										},
 									}}
-									onClick={() => navigate(i.path)}
 								>
 									<Box
 										sx={{
@@ -86,20 +94,32 @@ export const Home = () => {
 						<br />
 						<h4 style={{ color: "#525252" }}>Recent Jobs ❇️</h4>
 						<br />
-						<Box>
-							<table>
-								<tr>
-									<th>Id</th>
-									<th>Type</th>
-									<th>Status</th>
-									<th>Result</th>
-									<th>Created</th>
-								</tr>
-								{Array.from({ length: 6 }).map((i) => (
-									<JobComponent />
+						{loading ? (
+							<Box>
+								{Array.from({ length: 10 }).map((i) => (
+									<Skeleton
+										variant="rectangular"
+										sx={{ my: 1 }}
+										height={"75px"}
+									/>
 								))}
-							</table>
-						</Box>
+							</Box>
+						) : (
+							<Box>
+								<table>
+									<tr>
+										<th>Id</th>
+										<th>Type</th>
+										<th>Status</th>
+										<th>Result</th>
+										<th>Created</th>
+									</tr>
+									{jobs.map((j, i) => (
+										<JobComponent job={j.data} key={i} />
+									))}
+								</table>
+							</Box>
+						)}
 					</Box>
 					<Box flex={1} p={1} borderLeft="1px solid #ededed">
 						<h4 style={{ color: "#525252" }}>Overview</h4>
