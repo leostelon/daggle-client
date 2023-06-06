@@ -4,9 +4,8 @@ import { resolve } from "../utils/resolver";
 
 export const uploadDataset = async function (
 	files,
-	dataset,
+	name,
 	description,
-	stableDiffusionEnabled
 ) {
 	try {
 		let token = localStorage.getItem("token");
@@ -14,9 +13,8 @@ export const uploadDataset = async function (
 		for (let i = 0; i < files.length; i++) {
 			form.append("file", files[i], files[i].name);
 		}
-		form.append("dataset", dataset);
+		form.append("name", name);
 		form.append("description", description);
-		form.append("stableDiffusionEnabled", stableDiffusionEnabled);
 
 		const response = await axios.post(SERVER_URL + "/upload/dataset", form, {
 			headers: {

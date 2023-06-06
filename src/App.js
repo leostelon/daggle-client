@@ -2,6 +2,7 @@ import { Home } from "./screens/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Job } from "./screens/Job";
 import { FileUpload } from "./screens/FileUpload";
+import { DatasetUpload } from "./screens/DatasetUpload";
 
 function App() {
 	return (
@@ -10,6 +11,7 @@ function App() {
 				<Route path="/" exact element={<Home />} />
 				<Route path="/jobs" exact element={<Job />} />
 				<Route path="/fileupload" exact element={<FileUpload />} />
+				<Route path="/datasetupload" exact element={<DatasetUpload />} />
 			</Routes>
 		</Router>
 	);

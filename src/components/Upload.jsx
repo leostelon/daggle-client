@@ -1,35 +1,32 @@
-import { Box, Checkbox, CircularProgress, TextField } from "@mui/material";
+import { Box, CircularProgress, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { uploadDataset } from "../api/dataset";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const Upload = ({ title, loggedInAddress }) => {
 	const [uploadLoading, setUploadLoading] = useState(false);
 	const [file, setFile] = useState();
-	const [version, setVersion] = useState("");
 	const [description, setDescription] = useState("");
 	const [name, setName] = useState("");
-	const [checkMark, setCheckMark] = useState(false);
+	const navigate = useNavigate();
 
 	async function uploadFile() {
 		if (!loggedInAddress || loggedInAddress === "")
 			return toast("Please connect your wallet.", { type: "info" });
-		if (!file) return alert("Please select a file!");
+		if (!file) return toast("Please select a file!", { type: "info" });
 		if (!name || name === "")
-			return alert("Please enter a name for this dataset.");
-		if (!version || version === "")
-			return alert("Please enter a version for this dataset.");
+			return toast("Please enter a name for this dataset.", { type: "info" });
 		if (!description || description === "")
-			return alert("Please enter a description for this dataset.");
+			return toast("Please enter a description for this dataset.", {
+				type: "info",
+			});
 		setUploadLoading(true);
-		await uploadDataset(file, `${name}:${version}`, description, checkMark);
+		await uploadDataset(file, name, description);
 		toast("Successfully uploaded your dataset", { type: "success" });
+		navigate("/jobs");
 		setUploadLoading(false);
-	}
-
-	function handleCheckChange(event) {
-		setCheckMark(event.target.checked);
 	}
 
 	return (
@@ -44,20 +41,12 @@ export const Upload = ({ title, loggedInAddress }) => {
 			<Box
 				sx={{
 					textAlign: "center",
-					border: "2px solid grey",
+					border: "2px solid lightgrey",
 					borderStyle: "dotted",
 					p: 4,
-					backgroundColor: "#1b1c1d",
 				}}
 			>
-				<h3
-					style={{
-						color: "grey",
-					}}
-				>
-					{title}
-				</h3>
-				<AiOutlineCloudUpload size={80} />
+				<AiOutlineCloudUpload style={{ color: "grey" }} size={80} />
 				<Box
 					style={{
 						marginBottom: "16px",
@@ -71,7 +60,7 @@ export const Upload = ({ title, loggedInAddress }) => {
 						onChange={(e) => setFile(e.target.files)}
 					/>
 				</Box>
-				<Box sx={{ mt: 1 }}>
+				<Box sx={{ mt: 1, mb: 2 }}>
 					<TextField
 						placeholder="Enter dataset name"
 						size="small"
@@ -84,25 +73,6 @@ export const Upload = ({ title, loggedInAddress }) => {
 						}}
 						InputProps={{
 							style: {
-								color: "white",
-								border: "1px solid white",
-							},
-						}}
-					/>
-					<TextField
-						placeholder="Enter version"
-						size="small"
-						value={version}
-						onChange={(e) => {
-							setVersion(e.target.value);
-						}}
-						sx={{
-							width: "100%",
-							mt: 2,
-						}}
-						InputProps={{
-							style: {
-								color: "white",
 								border: "1px solid white",
 							},
 						}}
@@ -122,64 +92,10 @@ export const Upload = ({ title, loggedInAddress }) => {
 						}}
 						InputProps={{
 							style: {
-								color: "white",
 								border: "1px solid white",
 							},
 						}}
 					/>
-					{/* Enable Stable-Diffusion */}
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "flex-start",
-							backgroundColor: "#256afe33",
-							mt: 2,
-							mb: 2,
-							borderRadius: "4px",
-							p: 1,
-							py: 2,
-						}}
-					>
-						<Box>
-							<Checkbox
-								sx={{
-									color: "#256afe",
-									"&.Mui-checked": {
-										color: "#256afe",
-									},
-								}}
-								checked={checkMark}
-								onChange={handleCheckChange}
-							/>
-							Enable Stable-Diffusion on this dataset.
-						</Box>
-						<Box
-							sx={{
-								textAlign: "start",
-								color: "#8d8d8d",
-								fontWeight: "500",
-								px: 1,
-							}}
-						>
-							⚠️ Enabling this gives option to test out your dataset's on our
-							platform without the need of downloading. This uses{" "}
-							<span
-								style={{
-									fontWeight: "bold",
-									textDecoration: "underline",
-									cursor: "pointer",
-								}}
-								onClick={() => {
-									window.open("https://docs.bacalhau.org/", "_blank");
-								}}
-							>
-								Bacalhau
-							</span>{" "}
-							to perform the operation off-chain. Please note that it might be
-							slow or even it might break.
-						</Box>
-					</Box>
 				</Box>
 				<Box
 					style={{
@@ -188,6 +104,7 @@ export const Upload = ({ title, loggedInAddress }) => {
 						fontWeight: 600,
 						borderRadius: "4px",
 						cursor: "pointer",
+						color: "white",
 					}}
 					onClick={uploadFile}
 				>
