@@ -1,0 +1,30 @@
+.editor {
+	border-radius: 4px;
+	background-color: rgba(250, 235, 215, 0.618);
+	min-height: 65vh;
+	font-family: '"Fira code", "Fira Mono", monospace';
+	font-size: 12;
+	overflow-y: "scroll";
+	max-height: "75vh";
+	-ms-overflow-style: none; /* Internet Explorer 10+ */
+	scrollbar-width: none; /* Firefox */
+}
+.editor::-webkit-scrollbar {
+	display: none; /* Safari and Chrome */
+}
+
+.editor textarea:focus {
+	outline: none;
+}
+
+.editor textarea {
+	border: none;
+}
+
+#datasets {
+	padding: 6px 4px;
+	font-size: 14px;
+	width: 100%;
+	border: 2px solid grey;
+	border-radius: 4px;
+}

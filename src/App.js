@@ -2,6 +2,7 @@ import { Home } from "./screens/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Job } from "./screens/Job";
 import { FileUpload } from "./screens/FileUpload";
+import { TensorflowTrain } from "./screens/TensorflowTrain";
 import { DatasetUpload } from "./screens/DatasetUpload";
 import { Datasets } from "./screens/Datasets";
 
@@ -14,6 +15,7 @@ function App() {
 				<Route path="/fileupload" exact element={<FileUpload />} />
 				<Route path="/datasetupload" exact element={<DatasetUpload />} />
 				<Route path="/datasets" exact element={<Datasets />} />
+				<Route path="/tensorflowtrain" exact element={<TensorflowTrain />} />
 			</Routes>
 		</Router>
 	);
