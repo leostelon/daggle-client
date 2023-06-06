@@ -10,11 +10,13 @@
 		"@testing-library/react": "^13.4.0",
 		"@testing-library/user-event": "^13.5.0",
 		"axios": "^1.4.0",
+		"prismjs": "^1.29.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-icons": "^4.8.0",
 		"react-router-dom": "^6.11.1",
 		"react-scripts": "^4.0.3",
+		"react-simple-code-editor": "^0.13.1",
 		"react-toastify": "4.1",
 		"web-vitals": "^2.1.4",
 		"web3": "^1.10.0"
@@ -29,7 +31,11 @@
 		"extends": [
 			"react-app",
 			"react-app/jest"
-		]
+		],
+		"env": {
+			"browser": true,
+			"node": true
+		}
 	},
 	"browserslist": {
 		"production": [

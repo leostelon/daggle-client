@@ -1,6 +1,5 @@
 import { default as axios } from "axios";
 import { SERVER_URL } from "../constants";
-import { resolve } from "../utils/resolver";
 
 export const uploadDataset = async function (
 	files,
@@ -32,7 +31,13 @@ export const uploadDataset = async function (
 
 export const getDatasets = async function () {
 	try {
-		const response = await axios.get(SERVER_URL + "/datasets");
+		let token = localStorage.getItem("token");
+
+		const response = await axios.get(SERVER_URL + "/datasets", {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 		if (response.status === 200) {
 			return response.data.repositories;
 		}
@@ -49,63 +54,6 @@ export const searchDatasets = async function (name) {
 		if (response.status === 200) {
 			return response.data.repositories;
 		}
-	} catch (error) {
-		console.log(error.message);
-	}
-};
-
-export const userDatasets = async function (user) {
-	try {
-		let token = localStorage.getItem("token");
-
-		const response = await axios.get(SERVER_URL + "/datasets/user/" + user, {
-			headers: {
-				"Content-Type": `application/json`,
-				Authorization: "Bearer " + token,
-			},
-		});
-		if (response.status === 200) {
-			return response.data.repositories;
-		}
-	} catch (error) {
-		console.log(error.message);
-	}
-};
-
-export const getDatasetVersion = async function (name) {
-	try {
-		let token = localStorage.getItem("token");
-
-		const response = await axios.get(
-			SERVER_URL + "/datasets/versions?name=" + name,
-			{
-				headers: {
-					"Content-Type": `application/json`,
-					Authorization: "Bearer " + token,
-				},
-			}
-		);
-		if (response.status === 200) {
-			return response.data.repositories;
-		}
-	} catch (error) {
-		console.log(error.message);
-	}
-};
-
-export const downloadDataset = async function (id) {
-	try {
-		let token = localStorage.getItem("token");
-
-		const resolved = await resolve(
-			axios.get(SERVER_URL + "/datasets/download?id=" + id, {
-				headers: {
-					"Content-Type": `application/json`,
-					Authorization: "Bearer " + token,
-				},
-			})
-		);
-		return resolved;
 	} catch (error) {
 		console.log(error.message);
 	}
