@@ -5,6 +5,7 @@ import { FileUpload } from "./screens/FileUpload";
 import { TensorflowTrain } from "./screens/TensorflowTrain";
 import { DatasetUpload } from "./screens/DatasetUpload";
 import { Datasets } from "./screens/Datasets";
+import { Model } from "./screens/Model";
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 				<Route path="/fileupload" exact element={<FileUpload />} />
 				<Route path="/datasetupload" exact element={<DatasetUpload />} />
 				<Route path="/datasets" exact element={<Datasets />} />
+				<Route path="/models" exact element={<Model />} />
 				<Route path="/tensorflowtrain" exact element={<TensorflowTrain />} />
 			</Routes>
 		</Router>

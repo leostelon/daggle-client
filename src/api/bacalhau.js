@@ -78,6 +78,24 @@ export const getJobs = async function () {
 	}
 };
 
+export const getModels = async function () {
+	try {
+		let token = localStorage.getItem("token");
+
+		const resolved = await resolve(
+			axios.get(SERVER_URL + "/models", {
+				headers: {
+					"Content-Type": `application/json`,
+					Authorization: `Bearer ${token}`,
+				},
+			})
+		);
+		return resolved;
+	} catch (error) {
+		console.log(error.message);
+	}
+};
+
 export const uploadScript = async function (script) {
 	try {
 		let token = localStorage.getItem("token");
