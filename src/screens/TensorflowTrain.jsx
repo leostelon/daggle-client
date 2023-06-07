@@ -38,14 +38,18 @@ export const TensorflowTrain = () => {
 			fileUplaodResolved.data.filename,
 			fileUrl
 		);
-		console.log(bacalhauResolved);
+		if (bacalhauResolved.statusCode === 200) {
+			setCode(`# Paste your python code here.`);
+		}
 		setLoading(false);
 	}
 
 	async function gd() {
-		const fileUplaodResolved = await getDatasets();
-		setDatasetOptions(fileUplaodResolved);
-		setFileUrl(fileUplaodResolved[0].data.file + "/");
+		const resolved = await getDatasets();
+		if (resolved.statusCode === 200) {
+			setDatasetOptions(resolved.data);
+			if (resolved.data.length > 0) setFileUrl(resolved.data[0].data.file + "/");
+		}
 	}
 
 	useEffect(() => {
@@ -92,6 +96,7 @@ export const TensorflowTrain = () => {
 								<ul>
 									<li>Upload only Python code.</li>
 									<li>Paste only Tensorflow enabled model training code.</li>
+									<li>Datasets can be accessed via /inputs/ directory.</li>
 									<li>Save your weights/models to outputs folder.</li>
 									<li>model.save('/outputs/')</li>
 									<li>model.save_weights('/outputs/')</li>

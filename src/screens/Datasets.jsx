@@ -13,7 +13,9 @@ export const Datasets = () => {
 	async function gJ() {
 		setLoading(true);
 		const resolved = await getDatasets();
-		setDatasets(resolved);
+		if (resolved.statusCode === 200) {
+			setDatasets(resolved.data);
+		}
 		setLoading(false);
 	}
 
@@ -31,52 +33,57 @@ export const Datasets = () => {
 					<br />
 					{loading ? (
 						<Box>
-							{Array.from({ length: 10 }).map((i) => (
+							{Array.from({ length: 10 }).map((_, i) => (
 								<Skeleton
 									variant="rectangular"
 									sx={{ my: 1 }}
 									height={"75px"}
+									key={i}
 								/>
 							))}
 						</Box>
 					) : (
 						<Box>
 							<table>
-								<tr>
-									<th>Id</th>
-									<th>Name</th>
-									<th>Description</th>
-									<th>Link</th>
-									<th>Size</th>
-									<th>Created</th>
-								</tr>
-								{datasets.map((d, i) => {
-									d = d.data;
-									return (
-										<tr>
-											<td
-												style={{
-													fontWeight: "500",
-													color: "#303031",
-													display: "flex",
-												}}
-											>
-												{getShortAddress(d.id)}
-											</td>
-											<td>{d.name}</td>
-											<td>{d.description}</td>
-											<td
-												onClick={() => window.open(d.file, "_blank")}
-												style={{ cursor: "pointer" }}
-											>
-												{getShortAddress(d.file)}
-											</td>
-											<td>{formatBytes(d.size)}</td>
-											{/* <td>09/04/2023 20:29</td> */}
-											<td>{new Date(d.timestamp).toDateString()}</td>
-										</tr>
-									);
-								})}
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Link</th>
+										<th>Size</th>
+										<th>Created</th>
+									</tr>
+								</thead>
+								<tbody>
+									{datasets.map((d, i) => {
+										d = d.data;
+										return (
+											<tr key={i}>
+												<td
+													style={{
+														fontWeight: "500",
+														color: "#303031",
+														display: "flex",
+													}}
+												>
+													{getShortAddress(d.id)}
+												</td>
+												<td>{d.name}</td>
+												<td>{d.description}</td>
+												<td
+													onClick={() => window.open(d.file, "_blank")}
+													style={{ cursor: "pointer" }}
+												>
+													{getShortAddress(d.file)}
+												</td>
+												<td>{formatBytes(d.size)}</td>
+												{/* <td>09/04/2023 20:29</td> */}
+												<td>{new Date(d.timestamp).toDateString()}</td>
+											</tr>
+										);
+									})}
+								</tbody>
 							</table>
 						</Box>
 					)}

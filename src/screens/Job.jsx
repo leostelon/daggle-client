@@ -12,7 +12,9 @@ export const Job = () => {
 	async function gJ() {
 		setLoading(true);
 		const resolved = await getJobs();
-		setJobs(resolved.data);
+		if (resolved.statusCode === 200) {
+			setJobs(resolved.data);
+		}
 		setLoading(false);
 	}
 
@@ -30,27 +32,32 @@ export const Job = () => {
 					<br />
 					{loading ? (
 						<Box>
-							{Array.from({ length: 10 }).map((i) => (
+							{Array.from({ length: 10 }).map((_, i) => (
 								<Skeleton
 									variant="rectangular"
 									sx={{ my: 1 }}
 									height={"75px"}
+									key={i}
 								/>
 							))}
 						</Box>
 					) : (
 						<Box>
 							<table>
-								<tr>
-									<th>Id</th>
-									<th>Type</th>
-									<th>Status</th>
-									<th>Result</th>
-									<th>Created</th>
-								</tr>
-								{jobs.map((j, i) => (
-									<JobComponent job={j.data} key={i} />
-								))}
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Type</th>
+										<th>Status</th>
+										<th>Result</th>
+										<th>Created</th>
+									</tr>
+								</thead>
+								<tbody>
+									{jobs.map((j, i) => (
+										<JobComponent job={j.data} key={i} />
+									))}
+								</tbody>
 							</table>
 						</Box>
 					)}

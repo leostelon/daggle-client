@@ -1,5 +1,6 @@
 import { default as axios } from "axios";
 import { SERVER_URL } from "../constants";
+import { resolve } from "../utils/resolver";
 
 export const uploadDataset = async function (
 	files,
@@ -33,14 +34,12 @@ export const getDatasets = async function () {
 	try {
 		let token = localStorage.getItem("token");
 
-		const response = await axios.get(SERVER_URL + "/datasets", {
+		const response = await resolve(axios.get(SERVER_URL + "/datasets", {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
-		});
-		if (response.status === 200) {
-			return response.data.repositories;
-		}
+		}));
+		return response;
 	} catch (error) {
 		console.log(error.message);
 	}
