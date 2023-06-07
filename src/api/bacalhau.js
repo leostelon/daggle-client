@@ -100,12 +100,12 @@ export const uploadScript = async function (script) {
 	}
 }
 
-export const getJob = async function (id) {
+export const getJob = async function (id, type) {
 	try {
 		let token = localStorage.getItem("token");
 
 		const resolved = await resolve(
-			axios.get(SERVER_URL + "/bacalhau/job?id=" + id, {
+			axios.get(`${SERVER_URL}/bacalhau/job?id=${id}&type=${type}`, {
 				headers: {
 					"Content-Type": `application/json`,
 					Authorization: `Bearer ${token}`,

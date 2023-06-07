@@ -1,0 +1,22 @@
+.refresh-icon.active {
+	margin: auto;
+    animation: mymove 2s linear infinite;
+}
+
+@keyframes mymove {
+	10% {
+		transform: rotate(36deg);
+	}
+	30% {
+		transform: rotate(108deg);
+	}
+	60% {
+		transform: rotate(216deg);
+	}
+	80% {
+		transform: rotate(288deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
