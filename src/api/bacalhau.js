@@ -118,6 +118,28 @@ export const uploadScript = async function (script) {
 	}
 }
 
+export const uploadNodejsScript = async function (script) {
+	try {
+		let token = localStorage.getItem("token");
+
+		const resolved = await resolve(
+			axios.post(
+				SERVER_URL + "/bacalhau/nodescript",
+				{ script },
+				{
+					headers: {
+						"Content-Type": `application/json`,
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
+		);
+		return resolved;
+	} catch (error) {
+		console.log(error.message);
+	}
+}
+
 export const runPythonScript = async function (scriptUrl, filename) {
 	try {
 		let token = localStorage.getItem("token");
@@ -125,6 +147,31 @@ export const runPythonScript = async function (scriptUrl, filename) {
 		const resolved = await resolve(
 			axios.post(
 				SERVER_URL + "/bacalhau/runpython",
+				{ scriptUrl, filename },
+				{
+					headers: {
+						"Content-Type": `application/json`,
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
+		);
+		if (resolved.statusCode === 200) {
+			toast("Successfully created a job in Bacalhau, please check jobs for status🚀", { type: "success" });
+		}
+		return resolved;
+	} catch (error) {
+		console.log(error.message);
+	}
+};
+
+export const runNodejsScript = async function (scriptUrl, filename) {
+	try {
+		let token = localStorage.getItem("token");
+
+		const resolved = await resolve(
+			axios.post(
+				SERVER_URL + "/bacalhau/runnodejs",
 				{ scriptUrl, filename },
 				{
 					headers: {

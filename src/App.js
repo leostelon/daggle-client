@@ -8,6 +8,7 @@ import { Datasets } from "./screens/Datasets";
 import { Model } from "./screens/Model";
 import { Marketplace } from "./screens/Marketplace";
 import { Python } from "./screens/Python";
+import { Nodejs } from "./screens/Nodejs";
 
 function App() {
 	return (
@@ -20,6 +21,7 @@ function App() {
 				<Route path="/datasets" exact element={<Datasets />} />
 				<Route path="/models" exact element={<Model />} />
 				<Route path="/python" exact element={<Python />} />
+				<Route path="/nodejs" exact element={<Nodejs />} />
 				<Route path="/marketplace" exact element={<Marketplace />} />
 				<Route path="/tensorflowtrain" exact element={<TensorflowTrain />} />
 			</Routes>

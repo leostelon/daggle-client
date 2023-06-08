@@ -16,7 +16,7 @@ const actions = [
 	{ title: "Train Model", image: TensorflowImg, path: "/tensorflowtrain" },
 	{ title: "Upload Dataset", image: Dataset, path: "/datasetupload" },
 	{ title: "Stable Diffusion", image: StableDiffusion },
-	{ title: "Node.js Script", image: Nodejs },
+	{ title: "Node.js Script", image: Nodejs, path: "/nodejs" },
 	{ title: "Python Script", image: Python, path: "/python" },
 	{ title: "Remove Background", image: RemoveBG },
 ];
