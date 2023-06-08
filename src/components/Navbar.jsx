@@ -10,12 +10,16 @@ import { MdOutlinePersonOutline } from "react-icons/md";
 import NoProfilePicture from "../assets/default-profile-icon.png";
 import { getShortAddress } from "../utils/addressShort";
 
+import { ethers } from "ethers";
+
 export const Navbar = ({ disableSearch = false }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 	const navigate = useNavigate();
 	const [username, setUsername] = useState("");
 	const [connectedToSite, setConnectedToSite] = useState(false);
+	const [ensName, setEnsName] = useState("");
+	const [ensAvatar, setEnsAvatar] = useState("");
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -41,8 +45,26 @@ export const Navbar = ({ disableSearch = false }) => {
 		}
 	}
 
+	async function getEnsName() {
+		const provider = new ethers.providers.JsonRpcProvider(
+			process.env.REACT_APP_QUICK_NODE
+		);
+		const name = await provider.lookupAddress(
+			"0x5555763613a12D8F3e73be831DFf8598089d3dCa"
+		);
+		console.log({ ENSNAME: name });
+		if (!name) return;
+		setEnsName(name);
+		const resolver = await provider.getResolver(name);
+		const avatar = await resolver.getAvatar();
+		console.log({ ENSAVATAR: avatar });
+		if (!avatar || !avatar.url) return;
+		setEnsAvatar(avatar.url);
+	}
+
 	useEffect(() => {
 		connectSite();
+		getEnsName();
 	}, []);
 
 	return (
@@ -99,7 +121,9 @@ export const Navbar = ({ disableSearch = false }) => {
 							<Box display="flex" alignItems={"center"}>
 								<Box
 									sx={{
-										backgroundImage: `url("${NoProfilePicture}")`,
+										backgroundImage: `url("${
+											ensAvatar !== "" ? ensAvatar : NoProfilePicture
+										}")`,
 										backgroundPosition: "center",
 										backgroundRepeat: "no-repeat",
 										backgroundSize: "cover",
@@ -108,7 +132,7 @@ export const Navbar = ({ disableSearch = false }) => {
 									onClick={handleClick}
 								></Box>
 								<Box sx={{ fontWeight: "bold", ml: "6px" }}>
-									{getShortAddress(username)}
+									{ensName !== "" ? ensName : getShortAddress(username)}
 								</Box>
 							</Box>
 							<Menu
