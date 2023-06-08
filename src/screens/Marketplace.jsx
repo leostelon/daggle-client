@@ -1,56 +1,45 @@
-import "../styles/Home.css";
-import { Box, Skeleton } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { LeftDrawer } from "../components/LeftDrawer";
+import { Box, Grid } from "@mui/material";
+import React from "react";
 import { Navbar } from "../components/Navbar";
+import { LeftDrawer } from "../components/LeftDrawer";
 import TensorflowImg from "../assets/tensorflow.png";
 import StableDiffusion from "../assets/stablediffusion.png";
+import Nodejs from "../assets/nodejs-logo.png";
+import Python from "../assets/python-logo.png";
 import FileUpload from "../assets/fileupload.png";
 import Dataset from "../assets/dataset.png";
-import Compass from "../assets/compass.png";
-import { JobComponent } from "../components/JobComponent";
+import RemoveBG from "../assets/removebg.png";
 import { useNavigate } from "react-router-dom";
-import { getJobs } from "../api/bacalhau";
 
 const actions = [
 	{ title: "Upload File", image: FileUpload, path: "/fileupload" },
 	{ title: "Train Model", image: TensorflowImg, path: "/tensorflowtrain" },
 	{ title: "Upload Dataset", image: Dataset, path: "/datasetupload" },
 	{ title: "Stable Diffusion", image: StableDiffusion },
-	{ title: "Explore Actions", image: Compass, path: "/marketplace" },
+	{ title: "Node.js Script", image: Nodejs },
+	{ title: "Python Script", image: Python },
+	{ title: "Remove Background", image: RemoveBG },
 ];
-export const Home = () => {
+
+export const Marketplace = () => {
 	const navigate = useNavigate();
-	const [jobs, setJobs] = useState([]);
-	const [loading, setLoading] = useState(true);
-
-	async function gJ() {
-		setLoading(true);
-		const resolved = await getJobs();
-		if (resolved.statusCode === 200) {
-			setJobs(resolved.data);
-		}
-		setLoading(false);
-	}
-
-	useEffect(() => {
-		gJ();
-	}, []);
 
 	return (
 		<Box sx={{ display: "flex" }}>
 			<LeftDrawer />
 			<Box style={{ width: `calc(100vw - 280px)` }}>
 				<Navbar />
-				<Box sx={{ p: 2, display: "flex" }}>
-					<Box flex={3}>
-						<h2>Home 🏠</h2>
-						<br />
-						<br />
-						<h4 style={{ color: "#525252" }}>Actions ✨</h4>
-						<br />
-						<Box display={"flex"}>
-							{actions.map((i, ind) => (
+				<Box sx={{ p: 2 }}>
+					<h2>Marketplace 🧭</h2>
+					<br />
+					<br />
+					<Grid
+						container
+						spacing={{ xs: 2, md: 3 }}
+						columns={{ xs: 4, sm: 8, md: 12 }}
+					>
+						{actions.map((i, ind) => (
+							<Grid item xs={12} sm={4} md={2} key={ind}>
 								<Box
 									key={ind}
 									sx={{
@@ -97,46 +86,9 @@ export const Home = () => {
 										<p>{i.title}</p>
 									</Box>
 								</Box>
-							))}
-						</Box>
-						<br />
-						<h4 style={{ color: "#525252" }}>Recent Jobs ❇️</h4>
-						<br />
-						{loading ? (
-							<Box>
-								{Array.from({ length: 10 }).map((_, i) => (
-									<Skeleton
-										variant="rectangular"
-										sx={{ my: 1 }}
-										height={"75px"}
-										key={i}
-									/>
-								))}
-							</Box>
-						) : (
-							<Box>
-								<table>
-									<thead>
-										<tr>
-											<th>Id</th>
-											<th>Type</th>
-											<th>Status</th>
-											<th>Result</th>
-											<th>Created</th>
-										</tr>
-									</thead>
-									<tbody>
-										{jobs.map((j, i) => (
-											<JobComponent job={j.data} key={i} />
-										))}
-									</tbody>
-								</table>
-							</Box>
-						)}
-					</Box>
-					<Box flex={1} p={1} borderLeft="1px solid #ededed">
-						<h4 style={{ color: "#525252" }}>Overview</h4>
-					</Box>
+							</Grid>
+						))}
+					</Grid>
 				</Box>
 			</Box>
 		</Box>

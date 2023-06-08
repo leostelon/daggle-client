@@ -5,13 +5,14 @@ import MuiDrawer from "@mui/material/Drawer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
+	AiFillCompass,
 	AiFillDatabase,
 	AiFillFire,
 	AiFillHome,
+	AiOutlineCompass,
 	AiOutlineDatabase,
 	AiOutlineFire,
 	AiOutlineHome,
-	AiOutlineLogout,
 } from "react-icons/ai";
 import { MdOutlineTask, MdTask } from "react-icons/md";
 import Logo from "../assets/logo.png";
@@ -44,10 +45,10 @@ const mainList = [
 		path: "/models",
 	},
 	{
-		text: "Logout",
-		i: () => <AiOutlineLogout />,
-		ai: () => <AiOutlineLogout />,
-		path: "/logout",
+		text: "Marketplace",
+		i: () => <AiOutlineCompass />,
+		ai: () => <AiFillCompass />,
+		path: "/marketplace",
 	},
 ];
 
@@ -106,7 +107,7 @@ export function LeftDrawer({ smaller }) {
 				return setIndex(2);
 			case "models":
 				return setIndex(3);
-			case "logout":
+			case "marketplace":
 				return setIndex(4);
 			default:
 				setIndex(0);
