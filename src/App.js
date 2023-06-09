@@ -9,12 +9,14 @@ import { Model } from "./screens/Model";
 import { Marketplace } from "./screens/Marketplace";
 import { Python } from "./screens/Python";
 import { Nodejs } from "./screens/Nodejs";
+import { Welcome } from "./screens/Welcome";
 
 function App() {
 	return (
 		<Router>
 			<Routes>
-				<Route path="/" exact element={<Home />} />
+				<Route path="/" exact element={<Welcome />} />
+				<Route path="/home" exact element={<Home />} />
 				<Route path="/jobs" exact element={<Job />} />
 				<Route path="/fileupload" exact element={<FileUpload />} />
 				<Route path="/datasetupload" exact element={<DatasetUpload />} />

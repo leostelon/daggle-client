@@ -24,7 +24,7 @@ const mainList = [
 		text: "Home",
 		i: () => <AiOutlineHome />,
 		ai: () => <AiFillHome />,
-		path: "/",
+		path: "/home",
 	},
 	{
 		text: "Jobs",
@@ -99,7 +99,7 @@ export function LeftDrawer({ smaller }) {
 
 	function updateIndex(path) {
 		switch (path.split("/")[1]) {
-			case "":
+			case "home":
 				return setIndex(0);
 			case "jobs":
 				return setIndex(1);

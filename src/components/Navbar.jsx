@@ -1,8 +1,6 @@
 import "../styles/navbar.css";
 import React, { useEffect, useState } from "react";
 import { Box, Menu, MenuItem } from "@mui/material";
-import { connectWalletToSite, getWalletAddress } from "../utils/wallet";
-import { createUser } from "../api/user";
 import { HiOutlineBell, HiOutlineLogout } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { SearchComponent } from "./search/SearchComponent";
@@ -16,7 +14,7 @@ export const Navbar = ({ disableSearch = false }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 	const navigate = useNavigate();
-	const [username, setUsername] = useState("");
+	const username = localStorage.getItem("address");
 	const [connectedToSite, setConnectedToSite] = useState(false);
 	const [ensName, setEnsName] = useState("");
 	const [ensAvatar, setEnsAvatar] = useState("");
@@ -29,20 +27,12 @@ export const Navbar = ({ disableSearch = false }) => {
 	};
 
 	async function connectSite() {
-		await connectWalletToSite();
-		const address = await getWalletAddress();
-		if (address && address !== "") {
-			let token = localStorage.getItem("token");
-			localStorage.setItem("address", address);
-			setUsername(address);
-			if (!token || token === "" || token === "undefined") {
-				await createUser(address);
-			}
-			token = localStorage.getItem("token");
-			if (token && token !== "" && token !== "undefined") {
-				setConnectedToSite(true);
-			}
+		let token = localStorage.getItem("token");
+		if (!token || token === "" || token === "undefined") {
+			setConnectedToSite(false);
+			return navigate("/welcome");
 		}
+		setConnectedToSite(true);
 	}
 
 	async function getEnsName() {
@@ -65,6 +55,7 @@ export const Navbar = ({ disableSearch = false }) => {
 	useEffect(() => {
 		connectSite();
 		getEnsName();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -176,7 +167,15 @@ export const Navbar = ({ disableSearch = false }) => {
 										setAnchorEl(null);
 									}}
 								>
-									<HiOutlineLogout color="#828488" size={20} />
+									<HiOutlineLogout
+										color="#828488"
+										size={20}
+										onClick={() => {
+											localStorage.clear();
+											window.location.replace("/");
+											setAnchorEl(null);
+										}}
+									/>
 									&nbsp;
 									<p
 										style={{
