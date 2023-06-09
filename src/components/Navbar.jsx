@@ -39,9 +39,7 @@ export const Navbar = ({ disableSearch = false }) => {
 		const provider = new ethers.providers.JsonRpcProvider(
 			process.env.REACT_APP_QUICK_NODE
 		);
-		const name = await provider.lookupAddress(
-			"0x5555763613a12D8F3e73be831DFf8598089d3dCa"
-		);
+		const name = await provider.lookupAddress(username);
 		console.log({ ENSNAME: name });
 		if (!name) return;
 		setEnsName(name);
