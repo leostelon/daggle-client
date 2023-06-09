@@ -16,6 +16,11 @@ import {
 } from "react-icons/ai";
 import { MdOutlineTask, MdTask } from "react-icons/md";
 import Logo from "../assets/logo.png";
+import { PrimaryGrey } from "../constants";
+import { BlueButton } from "./BlueButton";
+import { Dialog } from "@mui/material";
+import { BuyCreditsDialog } from "./BuyCredits";
+import { getUser } from "../api/user";
 
 const drawerWidth = 260;
 
@@ -96,6 +101,19 @@ export function LeftDrawer({ smaller }) {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [index, setIndex] = useState(0);
+	const [creditsOpen, setCreditsOpen] = useState(false);
+	const [user, setUser] = useState();
+
+	async function gU() {
+		const address = localStorage.getItem("address");
+		if (!address || address === "") return;
+		const user = await getUser(address);
+		setUser(user);
+	}
+
+	const handleCreditClose = () => {
+		setCreditsOpen(false);
+	};
 
 	function updateIndex(path) {
 		switch (path.split("/")[1]) {
@@ -116,6 +134,7 @@ export function LeftDrawer({ smaller }) {
 
 	useEffect(() => {
 		updateIndex(location.pathname);
+		gU();
 	}, [location.pathname]);
 
 	return (
@@ -198,9 +217,39 @@ export function LeftDrawer({ smaller }) {
 				<Box
 					sx={{
 						bottom: "30px",
+						backgroundColor: "#2c2d32",
+						p: 2,
+						borderRadius: "4px",
 					}}
 				>
-					Storage Consumption Box
+					<Dialog
+						open={creditsOpen}
+						onClose={handleCreditClose}
+						fullWidth
+						maxWidth="xs"
+					>
+						<BuyCreditsDialog />
+					</Dialog>
+					<p style={{ fontWeight: "600" }}>Credits</p>
+					<Box
+						display={"flex"}
+						sx={{ alignItems: "baseline", fontWeight: "500" }}
+					>
+						<p style={{ fontSize: "48px" }}>{user && user.credits}</p>
+						<p style={{ fontSize: "12px", color: PrimaryGrey }}>
+							&nbsp; Remaining
+						</p>
+					</Box>
+					<Box>
+						<BlueButton
+							title={
+								<p style={{ fontSize: "14px", fontWeight: "500" }}>
+									Buy Credits
+								</p>
+							}
+							onClick={() => setCreditsOpen(true)}
+						/>
+					</Box>
 				</Box>
 			</Box>
 		</Drawer>
