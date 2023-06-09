@@ -71,7 +71,7 @@ export const Welcome = () => {
 					</p>
 					<br />
 					<br />
-					<BlueButton title={"Connect your wallet"} onClick={() => {}} />
+					<BlueButton title={"Connect your wallet"} onClick={connectSite} />
 				</Box>
 			</Box>
 			<Box

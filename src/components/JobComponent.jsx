@@ -1,5 +1,5 @@
 import "../styles/JobComponent.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdContentCopy } from "react-icons/md";
 import { IoRefreshOutline } from "react-icons/io5";
 import { PrimaryGrey } from "../constants";
@@ -7,10 +7,11 @@ import { Box, Tooltip } from "@mui/material";
 import { toast } from "react-toastify";
 import { getJob } from "../api/bacalhau";
 
-export const JobComponent = ({ job }) => {
+export const JobComponent = ({ job: jb }) => {
 	const [copyEnabled, setCopyEnabled] = useState(false);
 	const [open, setOpen] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
+	const [job, setJob] = useState();
 
 	function toggleCopy() {
 		setCopyEnabled(!copyEnabled);
@@ -20,13 +21,25 @@ export const JobComponent = ({ job }) => {
 		if (refreshing) return;
 		setRefreshing(true);
 		const jobResolved = await getJob(job.id, job.type);
-		console.log(jobResolved);
+		if (jobResolved.statusCode === 200) {
+			setJob(jobResolved.data);
+			toast("Successfully refreshed.", { type: "success" });
+		} else {
+			toast("Some error occured, try again.", { type: "warning" });
+		}
 
-		toast("Successfully refreshed.", { type: "success" });
 		setRefreshing(false);
 	}
 
-	return (
+	useEffect(() => {
+		if (!job || !job.id) {
+			setJob(jb);
+		}
+	}, [job, jb]);
+
+	return !job ? (
+		<></>
+	) : (
 		<tr>
 			<td
 				style={{ fontWeight: "500", color: "#303031", display: "flex" }}

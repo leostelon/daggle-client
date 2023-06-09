@@ -59,6 +59,7 @@ export const FileUpload = () => {
 						<Box display={"flex"}>
 							{actions.map((i, ind) => (
 								<Box
+									key={ind}
 									sx={{
 										borderRadius: "12px",
 										p: 3,
@@ -152,7 +153,9 @@ export const FileUpload = () => {
 						)}
 						{actionsIndex === 1 && (
 							<Box maxWidth="50vw">
-                                <p>🎄 This is option is not enabled yet, check back later. 🎄</p>
+								<p>
+									🎄 This is option is not enabled yet, check back later. 🎄
+								</p>
 								<Info
 									title={"Upload files from Amazon S3 to IPFS via Estuary"}
 									description={
