@@ -103,12 +103,14 @@ export function LeftDrawer({ smaller }) {
 	const [index, setIndex] = useState(0);
 	const [creditsOpen, setCreditsOpen] = useState(false);
 	const [user, setUser] = useState();
+	let credits = localStorage.getItem("credits");
 
 	async function gU() {
 		const address = localStorage.getItem("address");
 		if (!address || address === "") return;
 		const user = await getUser(address);
 		setUser(user);
+		localStorage.setItem("credits", user.credits);
 	}
 
 	const handleCreditClose = () => {
@@ -235,7 +237,9 @@ export function LeftDrawer({ smaller }) {
 						display={"flex"}
 						sx={{ alignItems: "baseline", fontWeight: "500" }}
 					>
-						<p style={{ fontSize: "48px" }}>{user && user.credits}</p>
+						<p style={{ fontSize: "48px" }}>
+							{credits ? credits : user && user.credits}
+						</p>
 						<p style={{ fontSize: "12px", color: PrimaryGrey }}>
 							&nbsp; Remaining
 						</p>
