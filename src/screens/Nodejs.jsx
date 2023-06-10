@@ -19,7 +19,18 @@ import { toast } from "react-toastify";
 
 export const Nodejs = () => {
 	const [loading, setLoading] = useState(false);
-	const [code, setCode] = useState(`// Paste your nodejs code here.`);
+	const [code, setCode] = useState(`// This is sample script, you can also try running this.
+const fs = require("fs")
+// Your task here, make sure it's synchronous!
+
+var dir = '/outputs';
+
+if (!fs.existsSync(dir)){
+	fs.mkdirSync(dir, { recursive: true });
+}
+
+fs.writeFileSync("/outputs/results.json", JSON.stringify({ message: "Hello World!" }), { flags: "w" })	
+	`);
 
 	async function train() {
 		setLoading(true);

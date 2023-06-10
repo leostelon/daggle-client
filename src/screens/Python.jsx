@@ -19,7 +19,18 @@ import { toast } from "react-toastify";
 
 export const Python = () => {
 	const [loading, setLoading] = useState(false);
-	const [code, setCode] = useState(`# Paste your python code here.`);
+	const [code, setCode] = useState(`# This is sample script, you can also try running this.
+import os
+import json
+
+newpath = '/outputs' 
+if not os.path.exists(newpath):
+	os.makedirs(newpath)
+
+f = open("/outputs/result.json", "w")
+f.write(json.dumps({"message":"Hello World!"}))
+f.close()
+	`);
 
 	async function train() {
 		setLoading(true);
