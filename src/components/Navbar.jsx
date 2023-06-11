@@ -7,8 +7,10 @@ import { SearchComponent } from "./search/SearchComponent";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import NoProfilePicture from "../assets/default-profile-icon.png";
 import { getShortAddress } from "../utils/addressShort";
+import { EmbedSDK } from "@pushprotocol/uiembed";
 
 import { ethers } from "ethers";
+import { PrimaryGrey } from "../constants";
 
 export const Navbar = ({ disableSearch = false }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -53,6 +55,29 @@ export const Navbar = ({ disableSearch = false }) => {
 	useEffect(() => {
 		connectSite();
 		getEnsName();
+		if (username) {
+			// 'your connected wallet address'
+			EmbedSDK.init({
+				headerText: "Notifications", // optional
+				targetID: "sdk-trigger-id", // mandatory
+				appName: "consumerApp", // mandatory
+				user: username, // mandatory
+				chainId: 1, // mandatory
+				viewOptions: {
+					type: "sidebar", // optional [default: 'sidebar', 'modal']
+					showUnreadIndicator: true, // optional
+					unreadIndicatorColor: "#cc1919",
+					unreadIndicatorPosition: "bottom-right",
+				},
+				theme: "light",
+				onOpen: () => {},
+				onClose: () => {},
+			});
+		}
+
+		return () => {
+			EmbedSDK.cleanup();
+		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -87,7 +112,11 @@ export const Navbar = ({ disableSearch = false }) => {
 						justifyContent: "center",
 					}}
 				>
-					<Box mr={3} sx={{ display: "flex", position: "relative" }}>
+					<Box
+						mr={3}
+						sx={{ display: "flex", position: "relative", cursor: "pointer" }}
+						id="sdk-trigger-id"
+					>
 						<HiOutlineBell size={24} color="#828488" />
 						<Box
 							sx={{
@@ -183,6 +212,24 @@ export const Navbar = ({ disableSearch = false }) => {
 										Logout
 									</p>
 								</MenuItem>
+								<Box
+									sx={{
+										fontSize: "10px",
+										color: PrimaryGrey,
+										textAlign: "center",
+									}}
+								>
+									Names and Avatars
+									<br /> powered by{" "}
+									<span
+										style={{ color: "blue", cursor: "pointer" }}
+										onClick={() =>
+											window.open("https://ens.domains/", "_blank")
+										}
+									>
+										ENS
+									</span>
+								</Box>
 							</Menu>
 						</Box>
 					)}
