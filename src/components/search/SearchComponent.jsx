@@ -9,14 +9,16 @@ export function SearchComponent() {
 
 	const handleKeyDown = (event) => {
 		const value = event.target.value;
-		if (event.key === "Enter" && value !== "") {
-			navigate(`/explore?query=${value}`);
+		if (event.key === "Enter") {
+			navigate(`/jobs?query=${value}`);
+		} else if(value === "") {
+			navigate(`/jobs`);
 		}
 	};
 
 	const onSearch = (event) => {
 		if (input !== "") {
-			navigate(`/explore?query=${input}`);
+			navigate(`/jobs?query=${input}`);
 		}
 	};
 
@@ -33,7 +35,7 @@ export function SearchComponent() {
 					type="search"
 					id="search"
 					onKeyDown={handleKeyDown}
-					placeholder="Search..."
+					placeholder="Search jobs by id..."
 					value={input}
 					onInput={(e) => setInput(e.target.value)}
 				/>

@@ -94,9 +94,6 @@ export const Navbar = ({ disableSearch = false }) => {
 		>
 			<div className="navbar">
 				<div
-					onClick={() => {
-						navigate("/");
-					}}
 					style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
 				>
 					{!disableSearch && (

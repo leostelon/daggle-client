@@ -4,14 +4,17 @@ import { LeftDrawer } from "../components/LeftDrawer";
 import { Navbar } from "../components/Navbar";
 import { JobComponent } from "../components/JobComponent";
 import { getJobs } from "../api/bacalhau";
+import { useLocation } from "react-router-dom";
 
 export const Job = () => {
 	const [jobs, setJobs] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const search = useLocation().search;
+	const query = new URLSearchParams(search).get("query");
 
-	async function gJ() {
+	async function gJ(query) {
 		setLoading(true);
-		const resolved = await getJobs();
+		const resolved = await getJobs(query);
 		if (resolved.statusCode === 200) {
 			setJobs(resolved.data);
 		}
@@ -19,8 +22,8 @@ export const Job = () => {
 	}
 
 	useEffect(() => {
-		gJ();
-	}, []);
+		gJ(query);
+	}, [query]);
 
 	return (
 		<Box sx={{ display: "flex" }}>

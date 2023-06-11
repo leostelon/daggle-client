@@ -60,12 +60,12 @@ export const fileUpload = async function (url) {
 	}
 };
 
-export const getJobs = async function () {
+export const getJobs = async function (query) {
 	try {
 		let token = localStorage.getItem("token");
 
 		const resolved = await resolve(
-			axios.get(SERVER_URL + "/bacalhau", {
+			axios.get(SERVER_URL + `/bacalhau?query=${query ?? ""}`, {
 				headers: {
 					"Content-Type": `application/json`,
 					Authorization: `Bearer ${token}`,
