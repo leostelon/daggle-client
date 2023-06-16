@@ -10,6 +10,7 @@ import { Marketplace } from "./screens/Marketplace";
 import { Python } from "./screens/Python";
 import { Nodejs } from "./screens/Nodejs";
 import { Welcome } from "./screens/Welcome";
+import { Removebg } from "./screens/Removebg";
 
 function App() {
 	return (
@@ -20,6 +21,7 @@ function App() {
 				<Route path="/jobs" exact element={<Job />} />
 				<Route path="/fileupload" exact element={<FileUpload />} />
 				<Route path="/datasetupload" exact element={<DatasetUpload />} />
+				<Route path="/removebg" exact element={<Removebg />} />
 				<Route path="/datasets" exact element={<Datasets />} />
 				<Route path="/models" exact element={<Model />} />
 				<Route path="/python" exact element={<Python />} />

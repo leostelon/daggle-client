@@ -15,7 +15,6 @@ import {
 	AiOutlineHome,
 } from "react-icons/ai";
 import { MdOutlineTask, MdTask } from "react-icons/md";
-import Logo from "../assets/logo.png";
 import { PrimaryGrey } from "../constants";
 import { BlueButton } from "./BlueButton";
 import { Dialog } from "@mui/material";
@@ -162,8 +161,6 @@ export function LeftDrawer({ smaller }) {
 				<Box>
 					{/* Logo */}
 					<Box sx={{ mb: 6, display: "flex", alignItems: "center" }}>
-						<img height={"40px"} src={Logo} alt="homepage-logo" />
-						&nbsp;
 						<h2 style={{ paddingTop: "8px" }}>Daggle🐟</h2>
 					</Box>
 

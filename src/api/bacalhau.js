@@ -28,6 +28,44 @@ export const createTensorJob = async function (scriptUrl, filename, datasetUrl) 
 	}
 };
 
+export const createRemovebgJob = async function (file) {
+	try {
+		let token = localStorage.getItem("token");
+
+		// Image Upload
+		const form = new FormData();
+		form.append("file", file, file.name);
+		const response = await axios.post(SERVER_URL + "/upload/file", form, {
+			headers: {
+				"Content-Type": `multipart/form-data`,
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(response)
+		if (response.status !== 200) {
+			return toast("File upload failed", { type: "warning" })
+		}
+		const resolved = await resolve(
+			axios.post(
+				SERVER_URL + "/bacalhau/removebg",
+				{ filename: response.data.file.filename, fileUrl:response.data.protocolLink },
+				{
+					headers: {
+						"Content-Type": `application/json`,
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
+		);
+		if (resolved.statusCode === 200) {
+			toast("Successfully created a job in Bacalhau, please check jobs for status🚀", { type: "success" });
+		}
+		return resolved;
+	} catch (error) {
+		console.log(error.message);
+	}
+};
+
 export const fileUpload = async function (url) {
 	try {
 		let token = localStorage.getItem("token");

@@ -18,7 +18,7 @@ const actions = [
 	{ title: "Stable Diffusion", image: StableDiffusion },
 	{ title: "Node.js Script", image: Nodejs, path: "/nodejs" },
 	{ title: "Python Script", image: Python, path: "/python" },
-	{ title: "Remove Background", image: RemoveBG },
+	{ title: "Remove Background", image: RemoveBG, path: "/removebg" },
 ];
 
 export const Marketplace = () => {
