@@ -11,7 +11,7 @@ contract Daggle {
 
     function buyCredits(uint256 _credits) external payable {
         uint256 total = 1 * _credits;
-        require(msg.value == total * ( 1 ether), "Please send exact credits!");
+        require(msg.value == total * (1 ether), "Please send exact credits!");
         credits[msg.sender] += _credits;
     }
 

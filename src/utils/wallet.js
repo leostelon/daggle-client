@@ -25,8 +25,8 @@ export async function connectWalletToSite() {
 }
 
 export async function switchChain() {
-	const config = { ...ChainsConfig["POLYGON_TESTNET"] };
-	config.chainId = Web3.utils.toHex(ChainsConfig["POLYGON_TESTNET"].chainId);
+	const config = { ...ChainsConfig["FVM_CALIBERATION"] };
+	config.chainId = Web3.utils.toHex(ChainsConfig["FVM_CALIBERATION"].chainId);
 
 	try {
 		await window.ethereum.request({

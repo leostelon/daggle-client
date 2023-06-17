@@ -6,6 +6,7 @@ import Web3 from "web3";
 import { getWalletAddress, switchChain } from "../utils/wallet";
 import DaggleInterface from "../contracts/Daggle.json";
 import { addCredits } from "../api/user";
+import { CONTRACT_ADDRESS } from "../constants";
 
 export const BuyCreditsDialog = () => {
 	const [loading, setLoading] = useState(false);
@@ -14,12 +15,12 @@ export const BuyCreditsDialog = () => {
         try {
             setLoading(true);
 			await switchChain();
-			const price = Web3.utils.toWei("1");
+			const price = Web3.utils.toWei("5");
             const web3 = new Web3(window.ethereum);
 
 			const contract = new web3.eth.Contract(
 				DaggleInterface.abi,
-				"0xe84B47Ed5f64fB41593C990D7c543F078d154D5a"
+				CONTRACT_ADDRESS
 			);
 			const currentAddress = await getWalletAddress();
 
