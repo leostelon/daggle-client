@@ -46,61 +46,91 @@ export const Removebg = () => {
 				<Box sx={{ p: 2 }}>
 					<h2>Remove Image Background 🪞</h2>
 					<br />
-					{thumbnailFilePreview ? (
-						<Box
-							sx={{
-								width: "360px",
-								height: "240px",
-								borderRadius: "10px",
+					<Box
+						sx={{
+							width: "100%",
+							textAlign: "center",
+							display: "flex",
+							alignItems: "center",
+							flexDirection: "column",
+						}}
+					>
+						{thumbnailFilePreview ? (
+							<Box
+								sx={{
+									width: "360px",
+									height: "240px",
+									borderRadius: "10px",
 
-								backgroundImage: `url(${thumbnailFilePreview})`,
-								backgroundRepeat: "no-repeat",
-								backgroundSize: "cover",
-								backgroundPosition: "center",
+									backgroundImage: `url(${thumbnailFilePreview})`,
+									backgroundRepeat: "no-repeat",
+									backgroundSize: "cover",
+									backgroundPosition: "center",
 
-								display: "flex",
-								justifyContent: "flex-end",
+									display: "flex",
+									justifyContent: "flex-end",
 
-								mt: 1,
-							}}
-						>
-							<IconButtonHolder
-								sx={{ m: 1 }}
-								component="label"
-								onChange={(e) => {
-									if (e.target.files[0]?.type?.split("/")[0] !== "image")
-										toast("Please select a file with type image!", {
-											type: "info",
-										});
-									else setThumbnailFile(e.target.files[0]);
+									mt: 1,
 								}}
 							>
-								<RiImageEditLine />
+								<IconButtonHolder
+									sx={{ m: 1 }}
+									component="label"
+									onChange={(e) => {
+										if (e.target.files[0]?.type?.split("/")[0] !== "image")
+											return toast("Please select a file with type image!", {
+												type: "info",
+											});
+										if (e.target.files[0]?.type?.split("/")[1] !== "png")
+											return toast("Please only upload png images!", {
+												type: "info",
+											});
+										setThumbnailFile(e.target.files[0]);
+									}}
+								>
+									<RiImageEditLine />
+									<input type="file" hidden />
+								</IconButtonHolder>
+							</Box>
+						) : (
+							<Button
+								component="label"
+								onChange={(e) => {
+									console.log(e.target.files[0]?.type);
+									if (e.target.files[0]?.type?.split("/")[0] !== "image")
+										return toast("Please select a file with type image!", {
+											type: "info",
+										});
+									if (e.target.files[0]?.type?.split("/")[1] !== "png")
+										return toast("Please only upload png images!", {
+											type: "info",
+										});
+									setThumbnailFile(e.target.files[0]);
+								}}
+								sx={{ paddingLeft: "0px" }}
+							>
 								<input type="file" hidden />
-							</IconButtonHolder>
-						</Box>
-					) : (
-						<Button
-							component="label"
-							onChange={(e) => {
-								if (e.target.files[0]?.type?.split("/")[0] !== "image")
-									toast("Please select a file with type image!", {
-										type: "info",
-									});
-								else setThumbnailFile(e.target.files[0]);
-							}}
-							sx={{ paddingLeft: "0px" }}
-						>
-							<input type="file" hidden />
 
-							<FileUploadContainer />
-						</Button>
-					)}
-					<BlueButton
-						title={"Remove Background"}
-						loading={loading}
-						onClick={uploadFile}
-					/>
+								<FileUploadContainer />
+							</Button>
+						)}
+						<br />
+						<br />
+						<Box
+							sx={{
+								display: "flex",
+								alignItems: "center",
+								width: "100%",
+								justifyContent: "center",
+							}}
+						>
+							<BlueButton
+								title={"Remove Background"}
+								loading={loading}
+								onClick={uploadFile}
+							/>
+						</Box>
+					</Box>
 				</Box>
 			</Box>
 		</Box>

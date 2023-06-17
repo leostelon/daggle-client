@@ -135,7 +135,51 @@ export const Home = () => {
 						)}
 					</Box>
 					<Box flex={1} p={1} borderLeft="1px solid #ededed">
-						<h4 style={{ color: "#525252" }}>Overview</h4>
+						<Box
+							sx={{
+								p: "1",
+								fontSize: "14px",
+								fontWeight: "500",
+							}}
+						>
+							<center>
+								<img
+									src="https://imgur.com/BOMXskT.png"
+									height="100px"
+									alt="overview-img"
+								/>
+							</center>
+							<strong>Overview</strong>
+							<br />
+							<br />
+							Platform to offload extensive CPU workloads to Bacalhau, an
+							off-chain compute network.
+							<br />
+							<br />
+							<p>
+								Easy-to-use marketplace to upload Actions, monetise them if
+								needed. Actions are CLI commands that can be fed into Bacalhau.
+							</p>
+							<br />
+							<strong>Actions Include</strong>
+							<br />
+							<br />
+							<Box paddingLeft={2}>
+								<ul>
+									<li>Train Models</li>
+									<li>Run Python code.</li>
+									<li>Run Node.js code.</li>
+									<li>Run Stable Diffusion prompts.</li>
+									<li>File Uploads</li>
+									<li>Remove background in images.</li>
+								</ul>
+							</Box>
+							<br />
+							<p>
+								Manage your bacalhau jobs, check the status or results, redeploy
+								jobs, and many more⚡
+							</p>
+						</Box>
 					</Box>
 				</Box>
 			</Box>
