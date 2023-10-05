@@ -31,7 +31,9 @@ export const Welcome = () => {
 	}
 
 	useEffect(() => {
-		connectSite();
+		// Redirect to beta website
+		window.location.replace("https://beta.daggle.xyz");
+		// connectSite();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
